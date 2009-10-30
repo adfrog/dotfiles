@@ -1,0 +1,168 @@
+/*@namespace url(http://www.w3.org/1999/xhtml);*/
+@-moz-document domain(*mixi.jp), domain(mixi.jp) 
+{
+
+/* 全体を中央揃え */
+body { margin:0 auto !important; }
+body { width:950px !important; }
+body { font-size: 12px !important; }
+
+
+/* ロゴ非表示 */
+h1 { display:none !important; }
+
+/* 広告バナー非表示 */
+div.adBanner { display:none !important; }
+
+/* ヘッダの背景を透過色に */
+#headerArea { background:transparent !important; }
+
+
+/* ヘッダの高さを自動に */
+#headerArea { height:auto !important; }
+
+
+
+
+
+.bottomSpaceAd{ display:none}
+
+#prSepecial, #adBanner, .adBanner, .prContents, .diaryBottomAd {
+        display: none !important;
+}
+
+#footprintjack {display:none!important;}
+#footprintjack02 {display:none!important;}
+div.thumb a img {display:none!important;}
+
+
+
+
+
+.UserNaviList
+{
+  background-color: white;
+  
+  font-family: "ヒラギノ角ゴ Pro W3", Osaka, Tahoma, Verdana, "MS UI Gothic", "ＭＳ Ｐゴシック", sans-serif;
+  font-size: small;
+  color: black;
+}
+
+.UserNaviList,
+.UserNaviList ul,
+.UserNaviList ol
+{
+  margin: 0 0 0 20px;
+  padding: 0;
+
+  background-image: url("line_vertical.png");
+  background-repeat: repeat-y;
+}
+
+.UserNaviList li
+{
+  margin: 0;
+  padding: 0;
+  
+  background-image: url("line_diverge.png");
+  background-repeat: no-repeat;
+
+  text-indent: 20px;
+  line-height: 160%;
+
+  list-style-type: none;
+  list-style-position: outside;
+}
+.formButtons01 > p.rulesNote01{
+	display: none !important;
+}
+.UserNaviList li.last
+{
+  background-color: white;
+  background-image: url("line_terminal.png");
+}
+.messageAreaAd01
+{
+  display:none!important;
+}
+.headerNavigationRight{
+	display: none !important;
+}
+}
+
+/*@-moz-document url-prefix(http://www.google.co.jp/search)
+{
+
+.clr  { display:none !important; }
+}
+*/
+@-moz-document domain("www.nicovideo.jp") {
+
+/*広告、不要な物を削除　必要な物が消えてしまう時は各自で調整*/
+	#PAGEBODY > TABLE > TBODY > TR > TD:last-child > DIV:last-child,
+	div>table>tbody>tr>td>a[href*="ad.nicovideo.jp"],
+	div[class="mb16p4"]>div[id="web_pc_top_bottom"]>p>a[href*="ad.nicovideo.jp"],
+	a[href="JavaScript:ANCHOR('PAGETOP')"],
+	div[class="ads_728"],
+	#WATCHHEADER > TABLE:first-child > TBODY > TR > TD:last-child,
+	#WATCHFOOTER > DIV:last-child,
+	#WATCHFOOTER > DIV:first-child + SCRIPT + SCRIPT + DIV > DIV > TABLE
+		{
+		display: none !important;
+		}
+
+
+/*動画タイトル強調*/
+	a[class="video"][href*="view"],
+        h3>a[class="video"],
+        h1>a[class="video"],
+        p+p>a[class="video"][href*="watch"],
+        td>a[class="video"][href*="watch"],
+        div[class="thumb_R"]>p>a
+		{
+		background-color: lavender !important;
+		-moz-border-radius: 20px !important;
+		}
+
+/*タグ強調*/
+	a[href*="tag/"]
+		{
+		background-color:  lemonchiffon !important;
+		-moz-border-radius: 1px !important;
+		}
+
+/*動画説明文全体を強調*/
+	#WATCHHEADER > TABLE:first-child,
+
+        TR>td[class="rank_num"]+td+td
+		{
+		background-color: #F3F3F3 !important;
+		border-color: gray !important;
+		-moz-border-radius: 20px !important;
+		padding: 5px 10px 5px 10px !important;
+		}
+
+/*動画説明文を強調*/
+	#WATCHHEADER > TABLE:first-child > TBODY > TR > TD:first-child > DIV > P:last-child,
+        TR > TD > P+ H3 + P
+		{
+		background-color: white !important;
+		border: 0 !important;
+		-moz-border-radius: 20px !important;
+		padding: 5px 10px 5px 10px !important;
+		margin: 5px 0px 5px 0px !important;
+		}
+
+/*ランキング順位を強調*/
+	#PAGEBODY > DIV:first-child + DIV + FORM + TABLE > TBODY > TR > TD:first-child > DIV
+		{
+		color: #A2A2A2 !important;
+		background-color: #CCFFCC !important;
+		border: 0 !important;
+		-moz-border-radius: 20px !important;
+		padding: 5px 10px 5px 10px !important;
+		margin: 5px 0px 5px 0px !important;
+		}
+}
+
+

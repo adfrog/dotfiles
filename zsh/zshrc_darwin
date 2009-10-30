@@ -1,0 +1,2 @@
+alias je="open -a jedit\ X"
+alias mvim="open -a MacVim"

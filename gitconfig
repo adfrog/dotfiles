@@ -1,0 +1,15 @@
+[alias] 
+	st = status
+	ci = commit
+	co = checkout
+	br = branch
+[user]
+	name = heureux
+	email = info@rare.to
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+[core]
+    excludesfile = <%= ENV['HOME'] %>/.gitignore

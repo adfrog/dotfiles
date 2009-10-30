@@ -1,0 +1,32 @@
+/* ==== ポップアップメニューを角丸に
+http://userstyles.org/styles/8414
+ポップアップメニューの背景に火狐アイコン
+http://userstyles.org/styles/8028 */
+
+menupopup,
+popup {
+-moz-appearance: none !important;
+/* ↑この指定を入れないと、背景色の変更が反映されないことがある  
+opacity: 0.9 !important;*/
+-moz-border-radius: 17px !important;
+background-position: center center !important;
+background-repeat: no-repeat !important;
+background-attachment: scroll !important;
+}
+
+/*1passwordのRestoreの色がおかしくなったらこれ*/
+#OnePasswordFillForm {
+	color: #babab4 !important;
+}
+
+
+/* サイドバーを右へ */
+
+#browser {
+	-moz-box-direction: reverse;
+}
+
+#status-bar { visibility: visible; }
+
+/* vim: set fdm=marker sw=4 ts=4 et: */
+

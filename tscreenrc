@@ -1,0 +1,59 @@
+# エンコーディング
+defencoding utf-8
+encoding utf-8 utf-8
+# スタートアップ画面オフ
+startup_message off
+
+# プレフックス
+escape ^t^t
+
+# ディタッチ
+autodetach on
+
+# ビジュアルベル
+vbell off
+
+
+shell zsh
+
+# Window List
+# bind w windowlist -b
+
+# 出るらしい
+bell "Bell in window %."
+activity "Activity in window %."
+
+# タブっぽい表示
+#hardstatus alwayslastline "%{= wk}%-Lw%n%f* %t%{= wk}%+Lw %= %y/%m/%d %c "
+#hardstatus alwayslastline "[%02c] %`%-w%{=b bw}%n %t%{-}%+w"
+#hardstatus alwayslastline "%{= rw} %H %{= wk}%-Lw%{= bw}%n%f* %t%{= wk}%+Lw %{= wk}%=%{= gk} %y/%m/%d %c "
+#hardstatus alwayslastline "%{ck}%?%-w%?[%n*%f %t]%?%+Lw%?%=| %Y/%m/%d(%D) %c"
+#hardstatus alwayslastline "%-w%{=b}%n %t%{-}%+w"
+hardstatus alwayslastline “%{= wk} %-w%{=bu dr}%n %t%{-}%+w %= %{=b wb}%y/%m/%d %{=b wb}%c”
+
+# 戻る行数
+scrollback 100000
+
+# ターミナルのサイズ変わるの防止
+Aborted because of window size chage
+# を防止できるらしい
+
+# あらかじめいくつかタブを開いておく
+#screen -t default 0
+#screen -t vim     1 vim
+#screen -t synergy 2
+#select 1
+#select 0
+
+attrcolor b ".I"
+#termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+#termcapinfo rxvt* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+defbce "on"
+#term xterm-256color
+#term rxvt これを設定するとscreenのタイトルが・・・
+#termcapinfo xterm* 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+
+
+#GNU screen を起動したり、アタッチしたときに、ターミナルの横幅がリサイズされないように
+termcapinfo xterm* 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+termcapinfo kterm-color* 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'

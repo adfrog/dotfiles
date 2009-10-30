@@ -1,0 +1,266 @@
+" for Vimperator 2.0pre
+
+echo "loading..."
+
+let mapleader = ","
+
+" Plugins
+" ======================================================================
+" plugin: copy.js
+map <Leader>c :copy 
+
+" migemo_hint.js
+set hintmatching=custom
+
+" encodingSwitcher.js
+map es :set fileencoding=Shift_JIS<CR>
+map eu :set fileencoding=UTF-8<CR>
+map ee :set fileencoding=EUC-JP<CR>
+
+" ldrize_cooperation.js
+let g:ldrc_captureMappings = "['j','k','p','o','?']"
+let g:ldrc_enable = "true"
+"hinttagsをLDRize SITEINFOのlinkだけにするモード
+let g:ldrc_hints = "true"
+let g:ldrc_intelligence_bind = "true"
+let g:ldrc_skip = "0.25"
+
+map Q :toggleldrc<CR>
+
+
+
+"httpheaders.js
+" set pageinfo=gfmhH
+autocmd VimperatorEnter .* :set pageinfo=gfcmhH
+
+
+" char-hints-mod2.js
+let g:hintsio="IO"
+let g:hintchars="HJKLASDFGYUIOPQWERTNMZXCVB"
+
+
+" maine_coon.js
+let g:maine_coon_default = "am"
+
+
+" localkeymode.js
+" let g:localkeymode_enable = "true"
+
+
+
+" Options
+" ======================================================================
+" これらの機能で新規タブを開いた際はアクティブにする
+set activate=homepage,quickmark,tabopen,paste
+
+" ex mode でインクリメント補完
+set wildoptions=auto
+
+"ページ全体で検索語を強調表示
+set hlsearch
+
+" default search/suggest engine: google
+set defsearch=gs
+set suggestengines=google
+
+" :[tab]open コマンドで補完する候補と順番
+" suggestengines で設定したのが S に適用されるぽい。
+set complete=slSf
+
+" 開いたページでフォームにフォーカスしない
+set focuscontent
+
+" ビープ音を無効化
+set visualbell
+hi Bell opacity: .5;
+
+" コマンド履歴保存件数 
+set history=1000
+
+set maxitems=10
+
+
+" EXコマンドの表示を新しいタブに。
+" addons + downloads + help + javascript + prefs
+set newtab=all
+
+
+
+" ブラウザタイトルの変更
+set titlestring="Firefox with Vimperator"
+
+" 開いているページがひとつだけでもタブバーを表示
+set showtabline=2
+
+" ブックマークツールバー表示
+set go=BrN
+
+" ポップアップウィンドウの処理
+set popups="tab"
+
+" textarea要素内でvi風のテキスト編集
+" set noinsertmode
+set editor="mvim -f"
+" set editor="/usr/bin/open -f"
+
+" 表示する履歴の件数を設定する(デフォルトは100)
+set messages=200
+" verboseレベルを設定し，全てのechoerr/echomsgの履歴を見られるようにする(デフォルトは0)
+set verbose=15
+
+
+
+" scroll height of <C-d> / <C-u>
+set scroll=3
+
+" need <CR> anytime in hints mode
+set followhints=1
+
+
+
+" undo一覧から開く
+map U :undo 
+
+" C-r でブラウザ再起動
+noremap <C-r> :restart<CR>
+
+" 上のディレクトリに移動
+noremap <BS> gu
+noremap <C-BS> gU
+
+" j/k でのスクロール幅を1行から3行に変更
+"noremap j 3<C-e>
+"noremap k 3<C-y>
+
+" J/K をC-d/u互換に
+noremap J <C-d>
+noremap K <C-u>
+
+" h/l でタブ移動
+noremap h <C-p><Esc>
+noremap l <C-n><Esc>
+
+" C-h/l でタブ位置変更
+noremap <silent> <C-h> :tabmove! -1<CR>
+noremap <silent> <C-l> :tabmove! +1<CR>
+
+" qmark
+"noremap m :qmark 
+"noremap M :qmarks<CR>
+
+" . でbufferを表示
+noremap . :buffer!
+
+" C-a で未分類のブックマークに追加/削除
+" noremap <C-a> A 
+
+" noremap d D
+" noremap D d
+
+
+" 設定ファイルを再読み込み
+noremap <silent> <Leader>s :so ~/.vimperatorrc<CR>
+noremap <silent> <Leader>S :mapc<CR>:cmapc<CR>:imapc<CR>:so ~/.vimperatorrc<CR>
+noremap <silent> a :colorscheme vim<CR>
+
+noremap ,o :open 
+noremap ,t :tabopen 
+
+
+" ex modeでC-jを無効化
+cmap <C-j> <Nop>
+
+
+" I で pageinfo
+map I :pageinfo<CR>
+
+
+
+"補完候補を上下キーでも選択できるようにする
+cnoremap <Up> <S-Tab>
+cnoremap <Down> <Tab>
+
+
+map sa :gmcommand AutoPagerize\ -\ on/off<CR>
+
+map sd :sidebar Diigo<CR>
+
+map sb :sidebar 
+
+map sc :sbclose<CR>
+
+
+
+
+
+" autocmd
+" ======================================================================
+
+" feedSomeKeys.js
+autocmd LocationChange .* :fmapc
+
+
+" Gmail/LDR/Fastladder/OpenFL上では新規タブをバックグラウンドで開く
+" autocmd LocationChange (?!https?://(mail\.google\.com\/(mail|a)\/|(reader\.livedoor\.com|fastladder\.com|0\.0\.0\.0\:3000)/reader/)) :set! browser.tabs.loadDivertedInBackground=false
+" autocmd LocationChange https?://(mail\.google\.com\/(mail|a)\/|(reader\.livedoor\.com|fastladder\.com|0\.0\.0\.0\:3000)/reader/) :set! browser.tabs.loadDivertedInBackground=true
+
+" gmail
+autocmd LocationChange ^https?://mail\.google\.com/(mail|a)/ :fmap -depth 4 c / j k n p o u e x s r a # [ ] z ? gi gs gt gd ga gc
+
+" livedoor Reader
+autocmd LocationChange reader\\.livedoor\\.com/reader :fmap! j k s a p o v c   <S-Space> z b < >
+
+autocmd LocationChange https?://www\\.rememberthemilk\\.com/home/ :fmap j k m i c t <Del> <C-S-Left> <C-S-Right>
+
+
+
+
+" Tumblr (要ReblogCommand)
+"autocmd LocationChange http://.*\.tumblr\.com/ :fmap i tj
+"autocmd LocationChange http://.*\.tumblr\.com/ :fmap e tj
+
+" favotter (要Twit Fav command Minibuffer)
+"autocmd LocationChange http://favotter\.matope\.com/ :fmap f F
+
+
+" Reblog用 (要tombloo.xpi)
+"autocmd LocationChange http://fastladder\.com/reader/ :fmap i Tj
+"autocmd LocationChange http://fastladder\.com/reader/ :fmap e Tj
+
+
+
+
+
+" qmark go + ○ でアクセス
+qmark d http://del.icio.us
+qmark h http://b.hatena.ne.jp
+qmark g http://gmail.com
+qmark n http://nicovideo.jp
+qmark t http://twitter.com
+qmark v http://veoh.com
+qmark y http://tv.yahoo.co.jp/listings/realtime/, http://weather.yahoo.co.jp/weather/jp/26/6100.html
+qmark m http://mixi.jp
+qmark e http://www.excite.co.jp/world/english
+qmark a http://www.macsoft.jp
+
+
+
+
+" Abbreviations
+" ======================================================================
+
+source ~/.vimperator/vimperatorrc.js
+
+" source ~/.vimperator/color/vimperator.css
+sty http://www.google.* .gac_c, .lst, .lsb {font-size:12px !important; height:inherit !important}
+" ime のコントロール。 Snow Leopard にしてから効かないけど
+sty -name commandline-ime chrome://* #liberator-commandline-command input {ime-mode: inactive !important;}
+
+
+colorscheme vim
+
+
+echo ".vimperatorrc sourced"
+" vim: set ft=vimperator:
+
+" vim: ft=vimperator sw=4 sts=4 ts=4 et

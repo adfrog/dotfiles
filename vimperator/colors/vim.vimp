@@ -1,0 +1,90 @@
+" ==VimperatorColorSchema==
+" name: vim
+" ==/VimperatorColorSchema==
+
+hi StatusLine           color: white;     background: black;
+
+hi Normal               color: #ddd;     background: #333;
+hi InfoMsg              color: #ddd;     background: #333;
+hi ModeMsg              color: #ddd;     background: #333;
+hi MoreMsg              color: limegreen;background: #333;
+hi LineNr               color: yellow;   background: #333;
+hi Question             color: limegreen;background: #333;
+hi WarningMsg           color: yellow;   background: #333;
+hi NonText                               background: #333;
+
+hi CompItem[selected]   color: #333;     background: Khaki;
+
+hi Title                color: Orchid;
+hi Indicator            color: DodgerBlue;
+hi String               color: Orchid;
+hi Number               color: Orchid;
+hi Object               color: SkyBlue;
+hi Function             color: Khaki;
+hi URL                  color: GreenYellow;
+
+hi Bell display:none
+" Hit-a-Hintのフォントを大きく
+hi Hint z-index:5000; font-family:monospace; font-size:12px; color:white; background-color:blue; border-color:ButtonShadow; border-width:0px; border-style:solid; padding:0px 1px 0px 1px; position:absolute;
+
+
+"hi TabText              color: #333; font: 11px TA_mai, "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", Osaka, "ＭＳ Ｐゴシック", sans-serif;
+hi TabText              color: #333; font: bold 11px "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", Osaka, "ＭＳ Ｐゴシック", sans-serif;
+
+style -name statusbar chrome://* <<EOM
+#status-bar statusbarpanel { padding: 0 1px !important; }
+statusbarpanel > * { margin: 0 !important; padding:0 !important; }
+EOM
+
+hi TabNumber		color: white; font-size: 8pt;
+
+
+style -name tab chrome://* <<EOM
+#content { background-color: #ccc; } /* tabbar */
+.tabs-alltabs-button { padding: 0 !important; }
+.tabs-container > stack { display: none; } /* remove tab selection menu */
+/*.tabs-container .box-inherit.scrollbox-innerbox { border-bottom: 1px solid #404040; } /* tab bar position: top */
+.tabs-container scrollbox {
+	background-color: #adadad;
+	border-bottom: 1px solid #000;
+}
+.tabbrowser-tab {
+	-moz-apperance: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	-moz-border-radius-topleft: 0 !important;
+	-moz-border-radius-topright: 0 !important;
+	-moz-border-radius-bottomright: 0 !important;
+	-moz-border-radius-bottomleft: 0 !important;
+	border-bottom: 1px solid #000 !important;
+	background-image: none !important;
+	background-color: silver;
+	text-align: left !important;
+}
+.tabs-alltabs-button, /* タブ一覧ボタン */
+.scrollbutton-up,     /* タブ右スクロールボタン */
+.scrollbutton-down    /* タブ左スクロールボタン */
+{
+	display: none !important;  
+}
+
+.tabbrowser-tab[selected=false] { background: #999 !important; }
+.tabbrowser-tab[selected=true] .tab-text { color: #ddd !important; }
+.tab-icon-image { margin-bottom: -4px; }
+.tab-image-left,
+.tab-image-middle,
+.tab-image-right {
+	background-image: none !important;
+}
+.tabs-newtab-button {display: none;}
+EOM
+
+style -name statusbar chrome://* <<EOM
+#status-bar statusbarpanel { padding: 0 1px !important; }
+statusbarpanel > * { margin: 0 !important; padding: 0 !important; }
+EOM
+
+
+
+" vim: sw=4 sts=4 ts=4 et
+

@@ -1,0 +1,7 @@
+.DS_Store
+vim/ja/*
+vim/doc/tags
+vim/doc/tags-ja
+vim/info
+vim/view
+vimperator/info

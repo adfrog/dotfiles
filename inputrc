@@ -1,0 +1,7 @@
+set kanji-code utf-8
+set convert-meta off
+set output-meta on
+set input-meta on
+set meta-flag on
+set enable-keypad on
+"\e[3~": delete-char

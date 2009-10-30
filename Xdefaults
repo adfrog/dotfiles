@@ -1,0 +1,29 @@
+urxvt*preeditType:root
+URxvt.background: Black
+URxvt.foreground: White
+
+URxvt.scrollstyle: next
+URxvt.scrollBar_right: true
+
+URxvt.geometry: 80x24
+urxvt*termName: rxvt-256color
+
+URxvt.font:\
+    xft:M+2VM+IPAG-circle:size=12:antialias=true, \
+    xft:Hiragino Maru Gothic Pro, \
+    xft:Monaco
+URxvt.boldFont:\
+    xft:M+2VM+IPAG-circle:bold, \
+    xft:Hiragino Maru Gothic Pro:bold, \
+    xft:Monaco:bold
+URxvt.italicFont:\
+    xft:M+2VM+IPAG-circle:italic, \
+    xft:Hiragino Maru Gothic Pro:italic, \
+    xft:Monaco:italic
+URxvt.boldItalicFont:\
+    xft:M+2VM+IPAG-circle:italic, \
+    xft:Hiragino Maru Gothic Pro:italic, \
+    xft:Monaco:italic
+
+Xft*antialias: true
+

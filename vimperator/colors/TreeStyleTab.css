@@ -1,0 +1,146 @@
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+
+/* http://userstyles.org/styles/5524 */
+
+/*
+
+enhances Tree Style Tabs Extension, designed for tree on left side
+- tabbar background color 
+- white color for selected tab
+- other very light blueish,
+- tabs rounded on left end
+- selected tab connected to page
+- other tabs slightly separated from page
+- tabs separated by small margin
+
+also tries to do enhancements to tabs on right side (rounded tabs, color) or bottom or top, but it's not well tested
+
+2009-05-06 changes for FF3.5 (e.g. shadows, remove border between tab and splitter)
+2009-05-07 fix splitter background on mswindows
+
+*/
+
+/* defaults */
+
+.tabbrowser-tabs tab
+  {
+  background: #dedede;
+  border: 1px solid #999 !important;
+  -moz-border-top-colors:    #999 !important;
+  -moz-border-bottom-colors: #999 !important;
+  -moz-border-left-colors:   #999 !important;
+  -moz-border-right-colors:  #999 !important;
+  -moz-border-radius: 6px !important;
+  margin-top: 2px !important;
+  height: 20px !important;
+  }
+
+.tabbrowser-tabs tab[selected="true"]
+  {
+  background: #FFF !important;
+  }
+
+.tabbrowser-tabs
+  {
+  /*
+  border-right: solid 0px #999 !important;
+  margin-right: 0 !important;
+  z-index: 0 !important;
+  */
+  }
+
+.tabbrowser-tabs splitter
+  {
+  background: #FFF !important;
+  border: 0px !important;
+  margin: 0px !important;
+  padding: 0px !important;
+  min-width: 3px !important;
+  max-width: 3px !important;
+  }
+
+.treestyletab-splitter {
+  background: #FFF !important;
+  border: 0px !important;
+}
+
+.scrollbox-innerbox
+  {
+  background-image: none !important;
+  padding-left:  !important;
+  }
+
+
+/* left */
+
+tabbrowser[treestyletab-tabbar-position="left"] tab
+  {
+  margin-right: 2px !important;
+  -moz-border-radius-topright: 0px !important;
+  -moz-border-radius-bottomright: 0px !important;
+  }
+
+tabbrowser[treestyletab-tabbar-position="left"] tab[selected="true"]
+  {
+  margin-right: 0px !important;
+  border-right: 0px !important;
+  /*
+  border-right: 1px solid #FFF !important;
+  margin-right: -1px !important;
+  z-index: 1000 !important;
+  -moz-border-right-colors: #FFF !important;
+  */
+  }
+
+tabbrowser[treestyletab-tabbar-position="left"] .tabbrowser-tabs
+  {
+  padding-left: 0px !important;
+  }
+
+tabbrowser[treestyletab-tabbar-position="left"] .tabbrowser-tabs .scrollbox-innerbox
+  {
+  padding-left: 2px !important;
+  }
+
+tabbrowser[treestyletab-tabbar-position="left"] .tabbrowser-strip
+  {
+  border-right: 0px !important;
+  }
+
+
+/* right */
+
+tabbrowser[treestyletab-tabbar-position="right"] tab
+  {
+  /*
+  margin-left: 2px !important;
+  -moz-border-radius-topleft: 0px !important;
+  -moz-border-radius-bottomleft: 0px !important;
+  */
+  }
+
+tabbrowser[treestyletab-tabbar-position="right"] tab[selected="true"]
+  {
+  /*
+  margin-left: 0px !important;
+  border-left: 0px !important;
+  */
+  }
+
+
+/* top */
+
+tabbrowser[treestyletab-tabbar-position="top"] tab
+  {
+  height: 2em !important;
+  max-height: 2em !important;
+  }
+
+
+/* bottom */
+
+tabbrowser[treestyletab-tabbar-position="bottom"] tab
+  {
+  height: 2em !important;
+  max-height: 2em !important;
+  }
