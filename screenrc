@@ -4,6 +4,7 @@ encoding utf-8 utf-8
 # スタートアップ画面オフ
 startup_message off
 
+
 # プレフックス
 escape ^t^t
 
