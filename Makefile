@@ -1,8 +1,8 @@
-ifndef SRCDIR
+#ifndef SRCDIR
 
 SRCDIR := $(shell pwd)
 
-endif
+#endif
 
 PREFIX = $(HOME)/.
 
