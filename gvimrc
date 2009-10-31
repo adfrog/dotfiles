@@ -7,7 +7,6 @@ set nolinebreak " 改行しない
 set textwidth=0 " 改行しない
 
 
-
 " 先にしとかないとWindowsでTransparencyが有効にならないっぽい
 gui
 

@@ -19,15 +19,37 @@ SCREEN		= screenrc tscreenrc
 X11			= Xdefaults xinitrc
 OTHER		= sleep wakeup dircolors lesshst
 
+CP_CMD		= cp -afv $< $@
+DIFF_CMD	= echo diff -uN $< $@
+UP_CMD		= echo up $< $@
 
+define FILE_ATTACH
+	@if [ ! $(MAKECMDGOALS) = vim ]; then \
+		case $(subst vim-,,$(MAKECMDGOALS)) in \
+			cp) 	$(CP_CMD);; \
+			diff)	$(DIFF_CMD); echo $(dir $@);; \
+			up)		$(UP_CMD);; \
+		esac; \
+	else \
+		$(CP_CMD); \
+	fi
+endef
 default: help
 
+TARGET_LIST		= zsh vim vimp git bash csh sh screen other
+TARGET			= $(TARGET_LIST) \
+				  $(addsuffix -cp,$(TARGETLIST)) \
+				  $(addsuffix -diff,$(TARGET_LIST)) \
+				  $(addsuffix -up,$(TARGET_LIST))
 
-.PHONY: zsh vim vimp git bash csh sh screen other help all clean sakura
+V_TARGET		= vim vim-cp vim-diff vim-up
+.PHONY: help all clean sakura $(TARGET)
 
 sakura: zsh vim git csh screen
 all: zsh vim vimp git bash csh sh screen other x11
 
+test: 
+	@echo $(TARGET)
 
 ############################################################
 # Zsh
@@ -37,21 +59,23 @@ ZSH_RCLIST		= $(addprefix $(PREFIX)zsh/.,$(ZSH_RC))
 zsh: $(ZSHLIST) $(ZSH_RCLIST)
 
 $(ZSHLIST): $(PREFIX)%: $(SRCDIR)/%
-	@echo $< $@
+	@cp -afv $< $@
+#	@echo $< $@
 
 $(ZSH_RCLIST): $(PREFIX)zsh/.%: $(SRCDIR)/zsh/%
 	@mkdir -p $(dir $@)
-	@echo $< $@
+	@cp -afv $< $@
+#	@echo $< $@
 
 ############################################################
 # Vim
 ############################################################
 VIMLIST			= $(addprefix $(PREFIX),$(VIM))
 
-vim: $(VIMLIST)
+$(V_TARGET): $(VIMLIST)
 
 $(VIMLIST): $(PREFIX)%: $(SRCDIR)/%
-	@echo $< $@
+	$(FILE_ATTACH)
 
 
 ############################################################
@@ -62,11 +86,13 @@ VIMP_RCLIST		= $(addprefix $(PREFIX)vimperator/.,$(VIMP_RC))
 vimp: $(VIMPLIST) $(VIMP_RCLIST)
 
 $(VIMPLIST): $(PREFIX)%: $(SRCDIR)/%
-	@echo $< $@
+	@cp -afv $< $@
+#	@echo $< $@
 
 $(VIMP_RCLIST): $(PREFIX)vimperator/.%: $(SRCDIR)/vimperator/%
 	@mkdir -p $(dir $@)
-	@echo $< $@
+	@cp -afv $< $@
+#	@echo $< $@
 
 
 
@@ -78,7 +104,8 @@ GITLIST			= $(addprefix $(PREFIX),$(GIT))
 git: $(GITLIST)
 
 $(GITLIST): $(PREFIX)%: $(SRCDIR)/%
-	@echo $< $@ 
+	@cp -afv $< $@
+#	@echo $< $@
 
 ############################################################
 # Bash
@@ -88,7 +115,8 @@ BASHLIST		= $(addprefix $(PREFIX),$(BASH))
 bash: $(BASHLIST)
 
 $(BASHLIST): $(PREFIX)%: $(SRCDIR)/%
-	@echo $< $@ 
+	@cp -afv $< $@
+#	@echo $< $@
 
 
 ############################################################
@@ -99,7 +127,8 @@ CSHLIST			= $(addprefix $(PREFIX),$(CSH))
 csh: $(CSHLIST)
 
 $(CSHLIST): $(PREFIX)%: $(SRCDIR)/%
-	@echo $< $@ 
+	@cp -afv $< $@
+#	@echo $< $@
 
 
 ############################################################
@@ -110,7 +139,8 @@ SHLIST			= $(addprefix $(PREFIX),$(SH))
 sh: $(SHLIST)
 
 $(SHLIST): $(PREFIX)%: $(SRCDIR)/%
-	@echo $< $@ 
+	@cp -afv $< $@
+#	@echo $< $@
 
 
 ############################################################
@@ -121,7 +151,8 @@ SCREENLIST		= $(addprefix $(PREFIX),$(SCREEN))
 screen: $(SCREENLIST)
 
 $(SCREENLIST): $(PREFIX)%: $(SRCDIR)/%
-	@echo $< $@ 
+	@cp -afv $< $@
+#	@echo $< $@
 
 
 
@@ -134,11 +165,13 @@ other: $(OTHERLIST) $(PREFIX)MacOSX/environment.plist
 
 
 $(OTHERLIST): $(PREFIX)%: $(SRCDIR)/%
-	@echo $< $@ 
+	@cp -afv $< $@
+#	@echo $< $@
 
 $(PREFIX)MacOSX/environment.plist: $(SRCDIR)/MacOSX/environment.plist
 	@mkdir -p $(dir $@)
-	@echo $< $@
+	@cp -afv $< $@
+#	@echo $< $@
 
 ############################################################
 # X11
@@ -148,7 +181,8 @@ X11LIST			= $(addprefix $(PREFIX),$(X11))
 x11: $(X11LIST)
 
 $(X11LIST): $(PREFIX)%: $(SRCDIR)/%
-	@echo $< $@ 
+	@cp -afv $< $@
+#	@echo $< $@
 
 
 ############################################################
@@ -169,6 +203,7 @@ help: shorthelp
 shorthelp:
 		@echo
 		@echo "    dotfiles install utility"
+		@echo "    gmake を使わないとダメぽいです"
 		@echo "    -------------------------------------------------"
 		@echo "    make help              -- Short help"
 #		@echo "    make longhelp          -- Long help"
