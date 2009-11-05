@@ -6,35 +6,40 @@ endif
 
 ROOT			:= /
 BASE_DIR		:= /
-
+VPATH			= .zsh .vimperator .MacOSX
 
 SRCPREDIR		:= $(SRCDIR)$(BASE_DIR)
 PREFIX			:= $(HOME)$(BASE_DIR)
 
-ZSH			= .zshenv
+ZSH			= .zshenv $(addprefix $(ZSH_DIR),$(ZSH_RC))
 ZSH_RC		= .zaliases .zshrc .zshrc_darwin .zshrc_sakura
+ZSH_DIR		= .zsh/
+
 VIM			= .vimrc .gvimrc
-VIMP		= .vimperatorrc
+
+VIMP		= .vimperatorrc $(addprefix $(VIMP_DIR),$(VIMP_RC))
 VIMP_RC		= vimperatorrc.js
+VIMP_DIR	= .vimperator/
+
 GIT			= .gitconfig .gitignore
 BASH		= .bash_profile .bashrc .profile
 CSH			= .cshrc
 SH			= .inputrc
 SCREEN		= .screenrc .tscreenrc
 X11			= .Xdefaults .xinitrc
-OTHER		= .sleep .wakeup .dircolors .lesshst
+OTHER		= .sleep .wakeup .dircolors .lesshst $(addprefix .MacOSX/,$(OTHER_RC))
+OTHER_RC	= environment.plist
 
 
-
-CP_CMD		= echo cp -afv $< $@
+INSTALL_CMD	= echo cp -afv $< $@
 DIFF_CMD	= diff -uN $< $@
 UP_CMD		= echo up $< $@
 
 define file-attach
 	@case $(MAKECMDGOALS) in \
-		*-install) 	$(CP_CMD);; \
-		*-diff)	$(DIFF_CMD); echo $(dir $@);; \
-		*-up)		$(UP_CMD);; \
+		install|sakura) 	mkdir -p $(dir $@); $(INSTALL_CMD);; \
+		diff)	$(DIFF_CMD); echo $(dir $@);; \
+		up)		$(UP_CMD);; \
 	esac;
 endef
 default: help
@@ -47,35 +52,30 @@ TARGET			= $(addsuffix -install,$(TARGETLIST)) \
 .PHONY: help all clean sakura $(TARGET) $(TARGET_LIST)
 
 sakura: zsh vim git csh screen
-all: zsh vim vimp git bash csh sh screen other x11
-
-
+install: $(TARGET_LIST)
+diff: $(TARGET_LIST)
+#include .vimperator/Makefile
+test:
+	@echo $(BASE_DIR)
 ############################################################
 # Zsh
 ############################################################
 ZSHLIST			= $(addprefix $(PREFIX),$(ZSH))
-ZSH_RCLIST		= $(addprefix $(PREFIX).zsh/,$(ZSH_RC))
 
-zsh-install zsh-diff: $(ZSHLIST) $(ZSH_RCLIST)
+zsh: $(ZSHLIST) $(ZSH_RCLIST)
 
-$(ZSHLIST): $(PREFIX)%: $(SRCPREDIR)%
-	@echo $(ZSH_RCLIST)
+$(ZSHLIST): $(PREFIX)%: %
 	$(file-attach)
 
-vpath % .zsh
-$(ZSH_RCLIST): $(PREFIX).zsh/%:%
-	@mkdir -p $(dir $@)
-	$(file-attach)
 
 ############################################################
 # Vim
 ############################################################
 VIMLIST			= $(addprefix $(PREFIX),$(VIM))
-V_TARGET = vim-install vim-diff
 
-$(V_TARGET): $(VIMLIST)
+vim: $(VIMLIST)
 
-$(VIMLIST): $(PREFIX)%: $(SRCPREDIR)%
+$(VIMLIST): $(PREFIX)%: %
 	$(file-attach)
 
 
@@ -83,15 +83,12 @@ $(VIMLIST): $(PREFIX)%: $(SRCPREDIR)%
 # Vimperator
 ############################################################
 VIMPLIST		= $(addprefix $(PREFIX),$(VIMP))
-VIMP_RCLIST		= $(addprefix $(PREFIX).vimperator/.,$(VIMP_RC))
 vimp: $(VIMPLIST) $(VIMP_RCLIST)
+	@$(MAKE) -C .vimperator
 
-$(VIMPLIST): $(PREFIX)%: $(SRCPREDIR)%
+$(VIMPLIST): $(PREFIX)%: %
 	$(file-attach)
 
-$(VIMP_RCLIST): $(PREFIX).vimperator/%: $(SRCPREDIR).vimperator/%
-	@mkdir -p $(dir $@)
-	$(file-attach)
 
 
 ############################################################
@@ -101,7 +98,7 @@ GITLIST			= $(addprefix $(PREFIX),$(GIT))
 
 git: $(GITLIST)
 
-$(GITLIST): $(PREFIX)%: $(SRCPREDIR)%
+$(GITLIST): $(PREFIX)%: %
 	$(file-attach)
 
 ############################################################
@@ -111,7 +108,7 @@ BASHLIST		= $(addprefix $(PREFIX),$(BASH))
 
 bash: $(BASHLIST)
 
-$(BASHLIST): $(PREFIX)%: $(SRCPREDIR)%
+$(BASHLIST): $(PREFIX)%: %
 	$(file-attach)
 
 
@@ -122,7 +119,7 @@ CSHLIST			= $(addprefix $(PREFIX),$(CSH))
 
 csh: $(CSHLIST)
 
-$(CSHLIST): $(PREFIX)%: $(SRCPREDIR)%
+$(CSHLIST): $(PREFIX)%: %
 	$(file-attach)
 
 
@@ -133,7 +130,7 @@ SHLIST			= $(addprefix $(PREFIX),$(SH))
 
 sh: $(SHLIST)
 
-$(SHLIST): $(PREFIX)%: $(SRCPREDIR)%
+$(SHLIST): $(PREFIX)%: %
 	$(file-attach)
 
 
@@ -144,7 +141,7 @@ SCREENLIST		= $(addprefix $(PREFIX),$(SCREEN))
 
 screen: $(SCREENLIST)
 
-$(SCREENLIST): $(PREFIX)%: $(SRCPREDIR)%
+$(SCREENLIST): $(PREFIX)%: %
 	$(file-attach)
 
 
@@ -153,16 +150,12 @@ $(SCREENLIST): $(PREFIX)%: $(SRCPREDIR)%
 ############################################################
 OTHERLIST		= $(addprefix $(PREFIX),$(OTHER))
 
-other: $(OTHERLIST) $(PREFIX).MacOSX/environment.plist
+other: $(OTHERLIST)
 
 
-$(OTHERLIST): $(PREFIX)%: $(SRCPREDIR)%
+$(OTHERLIST): $(PREFIX)%: %
 	$(file-attach)
 
-
-$(PREFIX)MacOSX/environment.plist: $(SRCPREDIR)/MacOSX/environment.plist
-	@mkdir -p $(dir $@)
-	$(file-attach)
 
 ############################################################
 # X11
@@ -171,7 +164,7 @@ X11LIST			= $(addprefix $(PREFIX),$(X11))
 
 x11: $(X11LIST)
 
-$(X11LIST): $(PREFIX)%: $(SRCPREDIR)%
+$(X11LIST): $(PREFIX)%: %
 	$(file-attach)
 
 
@@ -181,15 +174,15 @@ $(X11LIST): $(PREFIX)%: $(SRCPREDIR)%
 
 
 
-$(TARGET_LIST): 
-	@echo 
-	@echo "    $@ install command"
-	@echo "    -------------------------------------------------"
-	@echo "    make $@-install		-- Copy"
-	@echo "    make $@-diff	-- Diff"
-	@echo "    make $@-up		-- up"
-	@echo "    -------------------------------------------------"
-	@echo "    make update		-- Mirror updates"
+#$(TARGET_LIST): 
+#	@echo 
+#	@echo "    $@ install command"
+#	@echo "    -------------------------------------------------"
+#	@echo "    make $@-install		-- Copy"
+#	@echo "    make $@-diff	-- Diff"
+#	@echo "    make $@-up		-- up"
+#	@echo "    -------------------------------------------------"
+#	@echo "    make update		-- Mirror updates"
 
 
 

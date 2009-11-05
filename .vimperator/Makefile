@@ -1,31 +1,16 @@
-ifndef SRCDIR
+SUB_DIRS := colors plugin userchrome
+VPATH = $(SUB_DIRS)
+BASE_DIR := .vimperator
+PREFIX := $(HOME)/$(BASE_DIR)
 
-SRCDIR := $(shell pwd)
+find_files = $(wildcard $(dir)/*)
+FILES:= $(addprefix $(PREFIX)/, $(foreach dir,$(SUB_DIRS),$(find_files)))
 
-endif
+install: $(FILES)
 
-VPATH = $(HOME):$(SRCDIR):./colors
+test:
+	@echo $(files)
 
-DIRS = colors plugin userchrome
-TARGETS = doc xpi
-.PHONY: all
-#all: xpi ;
-
-#$(TARGETS:%=\%.%):
-#	@echo 3 MAKE $@
-#	$(MAKE) -C $* $(@:$*.%=%)
-#	@echo 4
-
-
-#$(TARGETS):
-#	@echo 1
-#	$(MAKE) $(DIRS:%=%.$@)
-#	@echo 2
-
-
-all: .zshenv
-
-zsh-diff:
-	
-.zshenv: ../zshenv
-	@echo $< $@
+$(FILES): $(PREFIX)/%: %
+	@mkdir -p $(dir $@)
+	@echo cp -afv $(CURDIR)/$< $@
