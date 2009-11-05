@@ -6,6 +6,7 @@
 ############################################################
 #
 
+
 export LANG=ja_JP.UTF-8
 case ${UID} in
 0)
@@ -411,6 +412,15 @@ Ctrl-X Ctrl-U	アンドゥ
 #COMMENT_OUT
 
 
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' formats ':(%s)%b'
+zstyle ':vcs_info:*' actionformats ':(%s)%b|%a'
+precmd () {
+    psvar=()
+    LANG=en_US.UTF-8 vcs_info
+    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+}
+PROMPT="%{${fg[yellow]}%}[%n@%m%1(v|%F{green}%1v%f|)%{${fg[yellow]}%}]%{${reset_color}%}%b "
 
 ############################################################
 # load user configuration file

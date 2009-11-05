@@ -4,96 +4,94 @@ SRCDIR := $(shell pwd)
 
 endif
 
-PREFIX = $(HOME)/.
+ROOT			:= /
+BASE_DIR		:= /
 
-ZSH			= zshenv
-ZSH_RC		= zaliases zshrc zshrc_darwin zshrc_sakura
-VIM			= vimrc gvimrc
-VIMP		= vimperatorrc
+
+SRCPREDIR		:= $(SRCDIR)$(BASE_DIR)
+PREFIX			:= $(HOME)$(BASE_DIR)
+
+ZSH			= .zshenv
+ZSH_RC		= .zaliases .zshrc .zshrc_darwin .zshrc_sakura
+VIM			= .vimrc .gvimrc
+VIMP		= .vimperatorrc
 VIMP_RC		= vimperatorrc.js
-GIT			= gitconfig gitignore
-BASH		= bash_profile bashrc profile
-CSH			= cshrc
-SH			= inputrc
-SCREEN		= screenrc tscreenrc
-X11			= Xdefaults xinitrc
-OTHER		= sleep wakeup dircolors lesshst
+GIT			= .gitconfig .gitignore
+BASH		= .bash_profile .bashrc .profile
+CSH			= .cshrc
+SH			= .inputrc
+SCREEN		= .screenrc .tscreenrc
+X11			= .Xdefaults .xinitrc
+OTHER		= .sleep .wakeup .dircolors .lesshst
 
-CP_CMD		= cp -afv $< $@
-DIFF_CMD	= echo diff -uN $< $@
+
+
+CP_CMD		= echo cp -afv $< $@
+DIFF_CMD	= diff -uN $< $@
 UP_CMD		= echo up $< $@
 
-define FILE_ATTACH
-	@if [ ! $(MAKECMDGOALS) = vim ]; then \
-		case $(subst vim-,,$(MAKECMDGOALS)) in \
-			cp) 	$(CP_CMD);; \
-			diff)	$(DIFF_CMD); echo $(dir $@);; \
-			up)		$(UP_CMD);; \
-		esac; \
-	else \
-		$(CP_CMD); \
-	fi
+define file-attach
+	@case $(MAKECMDGOALS) in \
+		*-install) 	$(CP_CMD);; \
+		*-diff)	$(DIFF_CMD); echo $(dir $@);; \
+		*-up)		$(UP_CMD);; \
+	esac;
 endef
 default: help
 
-TARGET_LIST		= zsh vim vimp git bash csh sh screen other
-TARGET			= $(TARGET_LIST) \
-				  $(addsuffix -cp,$(TARGETLIST)) \
+TARGET_LIST		= zsh vim vimp git bash csh sh screen other x11
+TARGET			= $(addsuffix -install,$(TARGETLIST)) \
 				  $(addsuffix -diff,$(TARGET_LIST)) \
 				  $(addsuffix -up,$(TARGET_LIST))
 
-V_TARGET		= vim vim-cp vim-diff vim-up
-.PHONY: help all clean sakura $(TARGET)
+.PHONY: help all clean sakura $(TARGET) $(TARGET_LIST)
 
 sakura: zsh vim git csh screen
 all: zsh vim vimp git bash csh sh screen other x11
 
-test: 
-	@echo $(TARGET)
 
 ############################################################
 # Zsh
 ############################################################
 ZSHLIST			= $(addprefix $(PREFIX),$(ZSH))
-ZSH_RCLIST		= $(addprefix $(PREFIX)zsh/.,$(ZSH_RC))
-zsh: $(ZSHLIST) $(ZSH_RCLIST)
+ZSH_RCLIST		= $(addprefix $(PREFIX).zsh/,$(ZSH_RC))
 
-$(ZSHLIST): $(PREFIX)%: $(SRCDIR)/%
-	@cp -afv $< $@
-#	@echo $< $@
+zsh-install zsh-diff: $(ZSHLIST) $(ZSH_RCLIST)
 
-$(ZSH_RCLIST): $(PREFIX)zsh/.%: $(SRCDIR)/zsh/%
+$(ZSHLIST): $(PREFIX)%: $(SRCPREDIR)%
+	@echo $(ZSH_RCLIST)
+	$(file-attach)
+
+vpath % .zsh
+$(ZSH_RCLIST): $(PREFIX).zsh/%:%
 	@mkdir -p $(dir $@)
-	@cp -afv $< $@
-#	@echo $< $@
+	$(file-attach)
 
 ############################################################
 # Vim
 ############################################################
 VIMLIST			= $(addprefix $(PREFIX),$(VIM))
+V_TARGET = vim-install vim-diff
 
 $(V_TARGET): $(VIMLIST)
 
-$(VIMLIST): $(PREFIX)%: $(SRCDIR)/%
-	$(FILE_ATTACH)
+$(VIMLIST): $(PREFIX)%: $(SRCPREDIR)%
+	$(file-attach)
 
 
 ############################################################
 # Vimperator
 ############################################################
 VIMPLIST		= $(addprefix $(PREFIX),$(VIMP))
-VIMP_RCLIST		= $(addprefix $(PREFIX)vimperator/.,$(VIMP_RC))
+VIMP_RCLIST		= $(addprefix $(PREFIX).vimperator/.,$(VIMP_RC))
 vimp: $(VIMPLIST) $(VIMP_RCLIST)
 
-$(VIMPLIST): $(PREFIX)%: $(SRCDIR)/%
-	@cp -afv $< $@
-#	@echo $< $@
+$(VIMPLIST): $(PREFIX)%: $(SRCPREDIR)%
+	$(file-attach)
 
-$(VIMP_RCLIST): $(PREFIX)vimperator/.%: $(SRCDIR)/vimperator/%
+$(VIMP_RCLIST): $(PREFIX).vimperator/%: $(SRCPREDIR).vimperator/%
 	@mkdir -p $(dir $@)
-	@cp -afv $< $@
-#	@echo $< $@
-
+	$(file-attach)
 
 
 ############################################################
@@ -103,9 +101,8 @@ GITLIST			= $(addprefix $(PREFIX),$(GIT))
 
 git: $(GITLIST)
 
-$(GITLIST): $(PREFIX)%: $(SRCDIR)/%
-	@cp -afv $< $@
-#	@echo $< $@
+$(GITLIST): $(PREFIX)%: $(SRCPREDIR)%
+	$(file-attach)
 
 ############################################################
 # Bash
@@ -114,9 +111,8 @@ BASHLIST		= $(addprefix $(PREFIX),$(BASH))
 
 bash: $(BASHLIST)
 
-$(BASHLIST): $(PREFIX)%: $(SRCDIR)/%
-	@cp -afv $< $@
-#	@echo $< $@
+$(BASHLIST): $(PREFIX)%: $(SRCPREDIR)%
+	$(file-attach)
 
 
 ############################################################
@@ -126,9 +122,8 @@ CSHLIST			= $(addprefix $(PREFIX),$(CSH))
 
 csh: $(CSHLIST)
 
-$(CSHLIST): $(PREFIX)%: $(SRCDIR)/%
-	@cp -afv $< $@
-#	@echo $< $@
+$(CSHLIST): $(PREFIX)%: $(SRCPREDIR)%
+	$(file-attach)
 
 
 ############################################################
@@ -138,9 +133,8 @@ SHLIST			= $(addprefix $(PREFIX),$(SH))
 
 sh: $(SHLIST)
 
-$(SHLIST): $(PREFIX)%: $(SRCDIR)/%
-	@cp -afv $< $@
-#	@echo $< $@
+$(SHLIST): $(PREFIX)%: $(SRCPREDIR)%
+	$(file-attach)
 
 
 ############################################################
@@ -150,10 +144,8 @@ SCREENLIST		= $(addprefix $(PREFIX),$(SCREEN))
 
 screen: $(SCREENLIST)
 
-$(SCREENLIST): $(PREFIX)%: $(SRCDIR)/%
-	@cp -afv $< $@
-#	@echo $< $@
-
+$(SCREENLIST): $(PREFIX)%: $(SRCPREDIR)%
+	$(file-attach)
 
 
 ############################################################
@@ -161,17 +153,16 @@ $(SCREENLIST): $(PREFIX)%: $(SRCDIR)/%
 ############################################################
 OTHERLIST		= $(addprefix $(PREFIX),$(OTHER))
 
-other: $(OTHERLIST) $(PREFIX)MacOSX/environment.plist
+other: $(OTHERLIST) $(PREFIX).MacOSX/environment.plist
 
 
-$(OTHERLIST): $(PREFIX)%: $(SRCDIR)/%
-	@cp -afv $< $@
-#	@echo $< $@
+$(OTHERLIST): $(PREFIX)%: $(SRCPREDIR)%
+	$(file-attach)
 
-$(PREFIX)MacOSX/environment.plist: $(SRCDIR)/MacOSX/environment.plist
+
+$(PREFIX)MacOSX/environment.plist: $(SRCPREDIR)/MacOSX/environment.plist
 	@mkdir -p $(dir $@)
-	@cp -afv $< $@
-#	@echo $< $@
+	$(file-attach)
 
 ############################################################
 # X11
@@ -180,17 +171,25 @@ X11LIST			= $(addprefix $(PREFIX),$(X11))
 
 x11: $(X11LIST)
 
-$(X11LIST): $(PREFIX)%: $(SRCDIR)/%
-	@cp -afv $< $@
-#	@echo $< $@
+$(X11LIST): $(PREFIX)%: $(SRCPREDIR)%
+	$(file-attach)
 
 
 ############################################################
-# 
+# HELP
 ############################################################
 
 
 
+$(TARGET_LIST): 
+	@echo 
+	@echo "    $@ install command"
+	@echo "    -------------------------------------------------"
+	@echo "    make $@-install		-- Copy"
+	@echo "    make $@-diff	-- Diff"
+	@echo "    make $@-up		-- up"
+	@echo "    -------------------------------------------------"
+	@echo "    make update		-- Mirror updates"
 
 
 

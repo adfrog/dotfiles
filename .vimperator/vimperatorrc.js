@@ -1,6 +1,5 @@
 // plugin_loader.js
 liberator.globalVariables.plugin_loader_roots = "~/Project/Vimperator/Plugins/";
-//liberator.globalVariables.plugin_loader_roots = "~/Project/Vimperator/plugins/ ~/Project/github/tsukkee/vimperator/plugin";
 liberator.globalVariables.plugin_loader_plugins = [
   '_libly',
   '_smooziee',
@@ -24,10 +23,8 @@ liberator.globalVariables.plugin_loader_plugins = [
   'migemo_hint',
   'migratestatusbar',
 //  'multi_requester',
-//  'nextlink',
   'pluginManager',
 //  'tabsort',
-//  'treeStyleTab',
   'toggler',
   'walk-input',
   'yetmappings',
@@ -136,40 +133,23 @@ mappings.addUserMap(
     {}
   );
 
-/*
-mappings.addUserMap(
-    [modes.NORMAL], ['d'], '',
-    function(){
-        tabs.remove(getBrowser().mCurrentTab, 1, true, 1);
-},{});
-mappings.addUserMap(
-    [modes.NORMAL], ['D'], '',
-    function(){
-        tabs.remove(getBrowser().mCurrentTab, 1, false, 1);
-},{});
-*/
 
 // css js を自動ロード
 
 (function(){
-  var colorDir = io.getRuntimeDirectories("colors")[0];
-  io.readDirectory(colorDir).forEach(function(file){
+  var colorDir = io.getRuntimeDirectories("styles")[0];
+  colorDir.readDirectory(true).forEach(function(file){
     if (/\.css$/i.test(file.path)) io.source(file.path, false);
   });
 })();
 (function(){
   var jsDir = io.getRuntimeDirectories("userchrome")[0];
-  io.readDirectory(jsDir).forEach(function(file){
+  jsDir.readDirectory(true).forEach(function(file){
     if (/\.js$/i.test(file.path)) io.source(file.path, false);
   });
 })();
-// タブの挙動を標準っぽく
-/*
-let (cmd = mappings.getDefault(modes.NORMAL, 'd'))
-  let (action = cmd.action)
-    cmd.action = function (count)
-      (count >= 0 ?  action.apply(this, arguments) : BrowserCloseTabOrWindow());
-*/
+
+
 //タブ上でのダブルクリックで再読込
 gBrowser.mTabContainer.addEventListener("dblclick", function(e){
 if (e.target.localName == "tab" && e.button == 0)BrowserReload();
@@ -177,24 +157,4 @@ else if (e.target.localName == "spacer" && e.button == 0)BrowserOpenTab();
 },false); 
 
 
-
-// statusline の [+-] をわかりやすい位置にわかりやすく表示
-(function() {
-  var p = document.createElement('statusbarpanel');
-  var l = document.getElementById('liberator-statusline-field-tabcount').cloneNode(false);
-  l.setAttribute('id', 'liberator-statusline-field-history');
-  l.setAttribute('value', '  ');
-  p.appendChild(l);
-  document.getElementById('status-bar').insertBefore(p,
-    document.getElementById('liberator-statusline'));
-  var setter = function() {
-    var e = document.getElementById('liberator-statusline-field-history');
-    var h = getWebNavigation().sessionHistory;
-    h = (h.index > 0 ? "<" : " ") + (h.index < h.count - 1 ? ">" : " ");
-    e.setAttribute('value', h);
-  };
-  setter();
-  getBrowser().addEventListener("load", function() setter(), true);
-  getBrowser().addEventListener("TabSelect", function() setter(), true);
-})();
 

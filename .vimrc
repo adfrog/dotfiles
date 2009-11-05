@@ -5,6 +5,7 @@ set viminfo+=!       " add '!' for YankRing plugin
 "set shellslash       " to use '/' for path delimiter in Windows
 set visualbell t_vb=     "beep & フラッシュも
 
+
 " Tab character
 set tabstop=4 shiftwidth=4 softtabstop=0
 set expandtab   " use space instead of tab
