@@ -6,10 +6,10 @@ PREFIX := $(HOME)/$(BASE_DIR)
 find_files = $(wildcard $(dir)/*)
 FILES:= $(addprefix $(PREFIX)/, $(foreach dir,$(SUB_DIRS),$(find_files)))
 
+.PHONY: install
+
 install: $(FILES)
 
-test:
-	@echo $(files)
 
 $(FILES): $(PREFIX)/%: %
 	@mkdir -p $(dir $@)

@@ -49,7 +49,7 @@ TARGET			= $(addsuffix -install,$(TARGETLIST)) \
 				  $(addsuffix -di,$(TARGET_LIST)) \
 				  $(addsuffix -up,$(TARGET_LIST))
 
-.PHONY: help all clean sakura $(TARGET) $(TARGET_LIST)
+.PHONY: install help all clean sakura $(TARGET) $(TARGET_LIST)
 
 sakura: zsh vim git csh screen
 install: $(TARGET_LIST)
