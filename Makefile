@@ -30,10 +30,8 @@ X11			= .Xdefaults .xinitrc
 OTHER		= .sleep .wakeup .dircolors .lesshst $(addprefix .MacOSX/,$(OTHER_RC))
 OTHER_RC	= environment.plist
 
-
-INSTALL_CMD	= cp -afv $(CURDIR)/$< $@
-DIFF_CMD	= echo diff -uN $< $@
-UP_CMD		= echo up $< $@
+modules := $(subst /module.mk,,$(shell find . -name module.mk))
+include $(addsuffix /module.mk,$(modules))
 
 define file-attach
 	@case $(MAKECMDGOALS) in \
@@ -58,6 +56,7 @@ diff:
 	git diff
 #include .vimperator/Makefile
 test:
+	@$(MAKE) -C .vimperator
 	@echo $(BASE_DIR)
 ############################################################
 # Zsh

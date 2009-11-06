@@ -6,14 +6,7 @@ PREFIX := $(HOME)/$(BASE_DIR)
 find_files = $(wildcard $(dir)/*)
 FILES:= $(addprefix $(PREFIX)/, $(foreach dir,$(SUB_DIRS),$(find_files)))
 
-include ../common.mk
+INSTALL_CMD	= cp -afv $(CURDIR)/$< $@
+DIFF_CMD	= echo diff -uN $< $@
+UP_CMD		= echo up $< $@
 
-install: $(FILES)
-
-test:
-	@echo $(INSTALL_CMD)
-
-$(FILES): $(PREFIX)/%: %
-	@mkdir -p $(dir $@)
-	@cp -afv $(CURDIR)/$< $@
-	@echo $(INSTALL_CMD)
