@@ -13,4 +13,4 @@ test:
 
 $(FILES): $(PREFIX)/%: %
 	@mkdir -p $(dir $@)
-	@echo cp -afv $(CURDIR)/$< $@
+	@cp -afv $(CURDIR)/$< $@

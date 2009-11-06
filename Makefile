@@ -31,14 +31,14 @@ OTHER		= .sleep .wakeup .dircolors .lesshst $(addprefix .MacOSX/,$(OTHER_RC))
 OTHER_RC	= environment.plist
 
 
-INSTALL_CMD	= echo cp -afv $< $@
-DIFF_CMD	= diff -uN $< $@
+INSTALL_CMD	= cp -afv $(CURDIR)/$< $@
+DIFF_CMD	= echo diff -uN $< $@
 UP_CMD		= echo up $< $@
 
 define file-attach
 	@case $(MAKECMDGOALS) in \
 		install|sakura) 	mkdir -p $(dir $@); $(INSTALL_CMD);; \
-		diff)	$(DIFF_CMD); echo $(dir $@);; \
+		di)	$(DIFF_CMD); echo $(dir $@);; \
 		up)		$(UP_CMD);; \
 	esac;
 endef
@@ -46,14 +46,16 @@ default: help
 
 TARGET_LIST		= zsh vim vimp git bash csh sh screen other x11
 TARGET			= $(addsuffix -install,$(TARGETLIST)) \
-				  $(addsuffix -diff,$(TARGET_LIST)) \
+				  $(addsuffix -di,$(TARGET_LIST)) \
 				  $(addsuffix -up,$(TARGET_LIST))
 
 .PHONY: help all clean sakura $(TARGET) $(TARGET_LIST)
 
 sakura: zsh vim git csh screen
 install: $(TARGET_LIST)
-diff: $(TARGET_LIST)
+di: $(TARGET_LIST)
+diff:
+	git diff
 #include .vimperator/Makefile
 test:
 	@echo $(BASE_DIR)
