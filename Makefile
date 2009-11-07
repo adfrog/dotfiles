@@ -3,29 +3,25 @@ ifndef SRCDIR
 SRCDIR := $(shell pwd)
 
 endif
-
-dir :=
 ROOT			:= /
 BASE_DIR		:= /
 
 SRCPREDIR		:= $(SRCDIR)$(BASE_DIR)
 PREFIX			:= $(HOME)$(BASE_DIR)
 
-ZSH			= .zshenv $(addprefix $(ZSH_DIR),$(ZSH_RC))
-ZSH_RC		= .zaliases .zshrc .zshrc_darwin .zshrc_sakura
-ZSH_DIR		= .zsh/
+ZSH			:= .zshenv
 
-VIM			= .vimrc .gvimrc
+VIM			:= .vimrc .gvimrc
 
-VIMP		= .vimperatorrc 
+VIMP		:= .vimperatorrc 
 
-GIT			= .gitconfig .gitignore
-BASH		= .bash_profile .bashrc .profile
-CSH			= .cshrc
-SH			= .inputrc
-SCREEN		= .screenrc .tscreenrc
-X11			= .Xdefaults .xinitrc
-OTHER		= .sleep .wakeup .dircolors .lesshst .MacOSX/environment.plist
+GIT			:= .gitconfig .gitignore
+BASH		:= .bash_profile .bashrc .profile
+CSH			:= .cshrc
+SH			:= .inputrc
+SCREEN		:= .screenrc .tscreenrc
+X11			:= .Xdefaults .xinitrc
+OTHER		:= .sleep .wakeup .dircolors .lesshst .MacOSX/environment.plist
 
 modules := $(subst /module.mk,,$(shell find . -name module.mk))
 include common.mk
@@ -55,7 +51,9 @@ diff:
 	git diff
 #include .vimperator/Makefile
 test:
-	@echo $(local_src)
+	@echo $(local_dir)
+	@echo $(VIMP)
+	@echo $(ZSH)
 ############################################################
 # Zsh
 ############################################################
@@ -84,7 +82,8 @@ $(VIMLIST): $(PREFIX)%: %
 VIMPLIST		= $(addprefix $(PREFIX),$(VIMP))
 vimp: $(VIMPLIST) 
 
-$(VIMPLIST): $(HOME)/%: %
+$(addprefix $(PREFIX),$(VIMP)): $(HOME)/%: %
+#$(VIMPLIST): $(HOME)/%: %
 	$(file-attach)
 
 
