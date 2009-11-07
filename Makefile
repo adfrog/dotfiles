@@ -4,9 +4,9 @@ SRCDIR := $(shell pwd)
 
 endif
 
+dir :=
 ROOT			:= /
 BASE_DIR		:= /
-VPATH			= .zsh .vimperator .MacOSX
 
 SRCPREDIR		:= $(SRCDIR)$(BASE_DIR)
 PREFIX			:= $(HOME)$(BASE_DIR)
@@ -17,9 +17,7 @@ ZSH_DIR		= .zsh/
 
 VIM			= .vimrc .gvimrc
 
-VIMP		= .vimperatorrc $(addprefix $(VIMP_DIR),$(VIMP_RC))
-VIMP_RC		= vimperatorrc.js
-VIMP_DIR	= .vimperator/
+VIMP		= .vimperatorrc 
 
 GIT			= .gitconfig .gitignore
 BASH		= .bash_profile .bashrc .profile
@@ -27,12 +25,13 @@ CSH			= .cshrc
 SH			= .inputrc
 SCREEN		= .screenrc .tscreenrc
 X11			= .Xdefaults .xinitrc
-OTHER		= .sleep .wakeup .dircolors .lesshst $(addprefix .MacOSX/,$(OTHER_RC))
-OTHER_RC	= environment.plist
+OTHER		= .sleep .wakeup .dircolors .lesshst .MacOSX/environment.plist
 
 modules := $(subst /module.mk,,$(shell find . -name module.mk))
-include $(addsuffix /module.mk,$(modules))
+include common.mk
+include $(addsuffix /module.mk,$(modules)) 
 
+files := $(get-files)
 define file-attach
 	@case $(MAKECMDGOALS) in \
 		install|sakura) 	mkdir -p $(dir $@); $(INSTALL_CMD);; \
@@ -56,8 +55,7 @@ diff:
 	git diff
 #include .vimperator/Makefile
 test:
-	@$(MAKE) -C .vimperator
-	@echo $(BASE_DIR)
+	@echo $(local_src)
 ############################################################
 # Zsh
 ############################################################
@@ -84,10 +82,9 @@ $(VIMLIST): $(PREFIX)%: %
 # Vimperator
 ############################################################
 VIMPLIST		= $(addprefix $(PREFIX),$(VIMP))
-vimp: $(VIMPLIST) $(VIMP_RCLIST)
-	@$(MAKE) -C .vimperator
+vimp: $(VIMPLIST) 
 
-$(VIMPLIST): $(PREFIX)%: %
+$(VIMPLIST): $(HOME)/%: %
 	$(file-attach)
 
 

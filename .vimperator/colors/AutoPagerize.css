@@ -65,3 +65,4 @@ a.autopagerize_link:hover, a.autopagerize_link:active
 @-moz-document url-prefix('http://sourceforge.jp/magazine/') {
   p.autopagerize_page_info{ clear:none !important; }
 }
+

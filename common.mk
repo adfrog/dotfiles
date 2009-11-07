@@ -1,12 +1,9 @@
-SUB_DIRS := colors plugin userchrome
-VPATH = $(SUB_DIRS)
-BASE_DIR := .vimperator
-PREFIX := $(HOME)/$(BASE_DIR)
 
-find_files = $(wildcard $(dir)/*)
-FILES:= $(addprefix $(PREFIX)/, $(foreach dir,$(SUB_DIRS),$(find_files)))
+#find_files = $(wildcard $(dir)/*)
+#get-files := $(foreach dir,$(dirs),$(find_files))
+#FILES:= $(addprefix $(PREFIX)/, $(foreach dir,$(sub_dir),$(find_files)))
 
-INSTALL_CMD	= cp -afv $(CURDIR)/$< $@
+INSTALL_CMD	= echo cp -afv $(CURDIR)/$< $@
 DIFF_CMD	= echo diff -uN $< $@
 UP_CMD		= echo up $< $@
 

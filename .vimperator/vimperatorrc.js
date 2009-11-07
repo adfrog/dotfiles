@@ -1,4 +1,4 @@
-// plugin_loader.js
+// plugin_loader.js 読み込みたいものを列挙
 liberator.globalVariables.plugin_loader_roots = "~/Project/Vimperator/Plugins/";
 liberator.globalVariables.plugin_loader_plugins = [
   '_libly',
@@ -137,7 +137,7 @@ mappings.addUserMap(
 // css js を自動ロード
 
 (function(){
-  var colorDir = io.getRuntimeDirectories("styles")[0];
+  var colorDir = io.getRuntimeDirectories("colors")[0];
   colorDir.readDirectory(true).forEach(function(file){
     if (/\.css$/i.test(file.path)) io.source(file.path, false);
   });

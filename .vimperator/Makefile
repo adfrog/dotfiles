@@ -15,5 +15,5 @@ test:
 
 $(FILES): $(PREFIX)/%: %
 	@mkdir -p $(dir $@)
-	@cp -afv $(CURDIR)/$< $@
+	@echo cp -afv $(CURDIR)/$< $@
 	@echo $(INSTALL_CMD)
