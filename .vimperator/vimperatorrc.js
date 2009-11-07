@@ -137,7 +137,7 @@ mappings.addUserMap(
 // css js を自動ロード
 
 (function(){
-  var colorDir = io.getRuntimeDirectories("styles")[0];
+  var colorDir = io.getRuntimeDirectories("colors")[0];
   colorDir.readDirectory(true).forEach(function(file){
     if (/\.css$/i.test(file.path)) io.source(file.path, false);
   });
