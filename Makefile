@@ -19,7 +19,7 @@ CSH			:= .cshrc
 SH			:= .inputrc
 SCREEN		:= .screenrc .tscreenrc
 X11			:= .Xdefaults .xinitrc
-OTHER		:= .sleep .wakeup .dircolors .lesshst .MacOSX/environment.plist
+OTHER		:= .dircolors .lesshst .MacOSX/environment.plist
 
 modules := $(subst /module.mk,,$(shell find . -name module.mk))
 include common.mk
@@ -27,7 +27,7 @@ include $(addsuffix /module.mk,$(modules))
 
 default: help
 
-TARGET_LIST		= zsh vim vimp git bash csh sh screen other x11
+TARGET_LIST		= zsh vim vimp git bash csh sh screen other x11 sleepwatcher
 TARGET			= $(addsuffix -install,$(TARGETLIST)) \
 				  $(addsuffix -di,$(TARGET_LIST)) \
 				  $(addsuffix -up,$(TARGET_LIST))
