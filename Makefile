@@ -25,14 +25,6 @@ modules := $(subst /module.mk,,$(shell find . -name module.mk))
 include common.mk
 include $(addsuffix /module.mk,$(modules)) 
 
-files := $(get-files)
-define file-attach
-	@case $(MAKECMDGOALS) in \
-		install|sakura) 	mkdir -p $(dir $@); $(INSTALL_CMD);; \
-		di)	$(DIFF_CMD); echo $(dir $@);; \
-		up)		$(UP_CMD);; \
-	esac;
-endef
 default: help
 
 TARGET_LIST		= zsh vim vimp git bash csh sh screen other x11
@@ -75,8 +67,7 @@ $(VIMLIST): $(PREFIX)%: %
 VIMPLIST		= $(addprefix $(PREFIX),$(VIMP))
 vimp: $(VIMPLIST) 
 
-$(addprefix $(PREFIX),$(VIMP)): $(HOME)/%: %
-#$(VIMPLIST): $(HOME)/%: %
+$(VIMPLIST): $(PREFIX)%: %
 	$(file-attach)
 
 
