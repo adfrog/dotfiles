@@ -3,7 +3,6 @@ ifndef SRCDIR
 SRCDIR := $(shell pwd)
 
 endif
-ROOT			:= /
 BASE_DIR		:= /
 
 SRCPREDIR		:= $(SRCDIR)$(BASE_DIR)
