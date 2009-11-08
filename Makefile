@@ -13,7 +13,6 @@ ZSH			:= .zshenv
 VIM			:= .vimrc .gvimrc
 
 VIMP		:= .vimperatorrc 
-
 GIT			:= .gitignore
 BASH		:= .bash_profile .bashrc .profile
 CSH			:= .cshrc
@@ -48,11 +47,6 @@ install: $(TARGET_LIST)
 di: $(TARGET_LIST)
 diff:
 	git diff
-#include .vimperator/Makefile
-test:
-	@echo $(local_dir)
-	@echo $(VIMP)
-	@echo $(ZSH)
 ############################################################
 # Zsh
 ############################################################
