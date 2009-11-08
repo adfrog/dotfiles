@@ -119,7 +119,7 @@ SCREENLIST		= $(addprefix $(PREFIX),$(SCREEN))
 
 screen: $(SCREENLIST)
 
-$(SCREENLIST): $(PREFIX)%: %
+$(SCREENLIST): .screenrc
 	$(file-attach)
 
 
