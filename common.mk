@@ -2,8 +2,6 @@ files := $(get-files)
 define file-attach
 	@case $(MAKECMDGOALS) in \
 		install|sakura) 	mkdir -p $(dir $@); $(INSTALL_CMD);; \
-		di)	$(DIFF_CMD); echo $(dir $@);; \
-		up)		$(UP_CMD);; \
 	esac;
 endef
 MKDIR := mkdir -p
