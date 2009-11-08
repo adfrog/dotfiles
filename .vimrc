@@ -5,7 +5,6 @@ set viminfo+=!       " add '!' for YankRing plugin
 "set shellslash       " to use '/' for path delimiter in Windows
 set visualbell t_vb=     "beep & フラッシュも
 
-
 " Tab character
 set tabstop=4 shiftwidth=4 softtabstop=0
 set expandtab   " use space instead of tab
@@ -30,13 +29,6 @@ set hlsearch   " highlight searched words
 set nobackup   " don't backup
 set autoread   " auto reload when file rewrite other application
 set noswapfile " don't use swap file
-
-" Help files
-if has('mac')
-    helptags ~/.vim/doc/
-elseif has('win32')
-    helptags ~/vimfiles/doc/
-endif
 
 " Display
 set showmatch         " 括弧の対応をハイライト
@@ -408,3 +400,43 @@ function! <SID>BufcloseCloseIt()
     endif 
 
 endfunction command! Bclose call <SID>BufcloseCloseIt() 
+
+" SETTING: RUNTIME DIR: ------------------------------------------------- {{{1
+
+function! s:enumDirs(dir)
+  return map(split(glob(fnamemodify(a:dir, ':p') . '*/'), "\n"), 'fnamemodify(v:val, '':h'')')
+endfunction
+
+function! s:isVimRuntimeDir(dir)
+  return fnamemodify(a:dir, ':t') =~ '^vimfiles\|^vim-'
+endfunction
+
+function! s:enumVimRuntimeDirs(dirRepos)
+  let runtimeDirs = []
+  for dir in s:enumDirs(a:dirRepos)
+    if s:isVimRuntimeDir(dir)
+      call add(runtimeDirs, dir)
+    else
+      let runtimeDirs += filter(s:enumDirs(dir), 's:isVimRuntimeDir(v:val)')
+    endif
+  endfor
+  return runtimeDirs
+endfunction
+function! s:initRuntimePath(dirsRuntime)
+  let dirsAfter = map(copy(a:dirsRuntime), 'v:val . "/after"')
+  let dirsHelp = map(copy(a:dirsRuntime), 'v:val . "/doc"')
+  let &runtimepath = join(a:dirsRuntime + [&runtimepath] + dirsAfter, ',')
+  for dirs in dirsHelp
+    if filereadable(glob(dirs . '/*.txt'))
+      let $DOCDIRS = dirs
+      helptags $DOCDIRS
+    endif
+  endfor
+endfunction
+
+" let s:dirRepos = expand('<sfile>:p:h:h:h')
+let s:dirRepos = $HOME . "/.vim"
+let s:dirsRuntime = s:enumVimRuntimeDirs(s:dirRepos)
+call s:initRuntimePath(s:dirsRuntime)
+
+

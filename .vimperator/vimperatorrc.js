@@ -1,4 +1,4 @@
-// plugin_loader.js
+// plugin_loader.js 読み込みたいものを列挙
 liberator.globalVariables.plugin_loader_roots = "~/Project/Vimperator/Plugins/";
 liberator.globalVariables.plugin_loader_plugins = [
   '_libly',

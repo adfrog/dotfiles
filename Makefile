@@ -3,38 +3,30 @@ ifndef SRCDIR
 SRCDIR := $(shell pwd)
 
 endif
-
-ROOT			:= /
 BASE_DIR		:= /
-VPATH			= .zsh .vimperator .MacOSX
 
 SRCPREDIR		:= $(SRCDIR)$(BASE_DIR)
 PREFIX			:= $(HOME)$(BASE_DIR)
 
-ZSH			= .zshenv $(addprefix $(ZSH_DIR),$(ZSH_RC))
-ZSH_RC		= .zaliases .zshrc .zshrc_darwin .zshrc_sakura
-ZSH_DIR		= .zsh/
+ZSH			:= .zshenv
 
-VIM			= .vimrc .gvimrc
+VIM			:= .vimrc .gvimrc
 
-VIMP		= .vimperatorrc $(addprefix $(VIMP_DIR),$(VIMP_RC))
-VIMP_RC		= vimperatorrc.js
-VIMP_DIR	= .vimperator/
+VIMP		:= .vimperatorrc 
 
-GIT			= .gitconfig .gitignore
-BASH		= .bash_profile .bashrc .profile
-CSH			= .cshrc
-SH			= .inputrc
-SCREEN		= .screenrc .tscreenrc
-X11			= .Xdefaults .xinitrc
-OTHER		= .sleep .wakeup .dircolors .lesshst $(addprefix .MacOSX/,$(OTHER_RC))
-OTHER_RC	= environment.plist
+GIT			:= .gitconfig .gitignore
+BASH		:= .bash_profile .bashrc .profile
+CSH			:= .cshrc
+SH			:= .inputrc
+SCREEN		:= .screenrc .tscreenrc
+X11			:= .Xdefaults .xinitrc
+OTHER		:= .sleep .wakeup .dircolors .lesshst .MacOSX/environment.plist
 
+modules := $(subst /module.mk,,$(shell find . -name module.mk))
+include common.mk
+include $(addsuffix /module.mk,$(modules)) 
 
-INSTALL_CMD	= cp -afv $(CURDIR)/$< $@
-DIFF_CMD	= echo diff -uN $< $@
-UP_CMD		= echo up $< $@
-
+files := $(get-files)
 define file-attach
 	@case $(MAKECMDGOALS) in \
 		install|sakura) 	mkdir -p $(dir $@); $(INSTALL_CMD);; \
@@ -58,7 +50,9 @@ diff:
 	git diff
 #include .vimperator/Makefile
 test:
-	@echo $(BASE_DIR)
+	@echo $(local_dir)
+	@echo $(VIMP)
+	@echo $(ZSH)
 ############################################################
 # Zsh
 ############################################################
@@ -85,10 +79,10 @@ $(VIMLIST): $(PREFIX)%: %
 # Vimperator
 ############################################################
 VIMPLIST		= $(addprefix $(PREFIX),$(VIMP))
-vimp: $(VIMPLIST) $(VIMP_RCLIST)
-	@$(MAKE) -C .vimperator
+vimp: $(VIMPLIST) 
 
-$(VIMPLIST): $(PREFIX)%: %
+$(addprefix $(PREFIX),$(VIMP)): $(HOME)/%: %
+#$(VIMPLIST): $(HOME)/%: %
 	$(file-attach)
 
 
