@@ -1,28 +1,14 @@
 ############################################################
-## alias & function dir
+## alias & function
+############################################################
 
 
-#### $PAGER	"less"  
-# less -M はページのステータス(何ページ目か)の表示
-if which jless >& /dev/null ; then
-    export PAGER="jless -RM --quiet -x2"
-elif which less >& /dev/null ;  then
-    export PAGER="less -RM --quiet -x2"
-else
-    export PAGER="more -x2"
-fi
 #### less
 alias less="$PAGER"
 alias m=less
 alias -g L="| less"
 alias -g M="| less"
 alias les="less"        # for typo
-
-if which vim >& /dev/null ; then	
-    #alias vi="LC_ALL=ja_JP.UTF-8 /opt/local/bin/vim"
-    #export EDITOR="LC_ALL=ja_JP.UTF-8 /opt/local/bin/vim"
-    export EDITOR=`which vim`
-fi
 
 #### man
 if which jman >& /dev/null; then
@@ -35,6 +21,7 @@ if [ $ARCHI = "irix" ]; then
 else; 
   alias psa='ps auxw'
 fi
+
 function pst() {                # CPU 使用率の高い方から8つ
   psa | head -n 1
   psa | sort -r -n +2 | grep -v "ps -auxww" | grep -v grep | head -n 8
@@ -67,9 +54,9 @@ elif [ $ARCHI = "linux" ]; then
 else
   alias ls="ls -G -w"
   alias lscolor='ls -G -w'
-if [ $TERM = "xterm-color" ]; then
-export LSCOLORS="gxfxcxdxbxegedabagacgx"
-fi
+    if [ $TERM = "xterm-color" ]; then
+    export LSCOLORS="gxfxcxdxbxegedabagacgx"
+    fi
 fi
 alias kls='ls'
 alias qls='ls' # Shift-PageUp を抜けるのについ q を打ってしまうのを回避

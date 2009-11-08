@@ -24,7 +24,6 @@ if [ -x /bin/hostname ]; then
 fi;
 export host=`echo $HOST | sed -e 's/\..*//'`
 
-
 ############################################################
 # 各種 zshファイルの場所 dir
 ############################################################
@@ -63,6 +62,7 @@ typeset -U path
 MANPATH=$HOME/local/man:/usr/local/share/man:/usr/share/man:/usr/X11R6/man
 
 ############################################################
+
 export UID
 
 export CC=`which gcc`
@@ -84,8 +84,21 @@ export LD_LIBRARY_PATH="/opt/intel_fc_80/lib:/opt/intel_fc_81/lib:\
 /usr/local/lib:/usr/local/lib/compat/pkg"
 
 
+#### $PAGER "less"  
+# less -M はページのステータス(何ページ目か)の表示
+if which jless >& /dev/null ; then
+    export PAGER="jless -RM --quiet -x2"
+elif which less >& /dev/null ;  then
+    export PAGER="less -RM --quiet -x2"
+else
+    export PAGER="more -x2"
+fi
 
 
+#### vim
+if which vim >& /dev/null ; then
+    export EDITOR=`which vim`
+fi
 
 #### $COLORTERM 
 export COLORTERM=0
