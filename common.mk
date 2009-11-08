@@ -7,3 +7,6 @@ INSTALL_CMD	= echo cp -afv $(CURDIR)/$< $@
 DIFF_CMD	= echo diff -uN $< $@
 UP_CMD		= echo up $< $@
 
+MKDIR := mkdir -p
+CP := cp -afv
+RM := rm
