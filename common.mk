@@ -1,5 +1,5 @@
 MKDIR := mkdir -p
-CP := cp -afv
+CP := echo cp -afv
 RM := rm
 
 INSTALL_CMD	= $(CP) $(CURDIR)/$< $@

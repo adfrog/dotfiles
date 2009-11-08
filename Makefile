@@ -14,7 +14,7 @@ VIM			:= .vimrc .gvimrc
 
 VIMP		:= .vimperatorrc 
 
-GIT			:= .gitconfig .gitignore
+GIT			:= .gitignore
 BASH		:= .bash_profile .bashrc .profile
 CSH			:= .cshrc
 SH			:= .inputrc
@@ -92,7 +92,7 @@ $(addprefix $(PREFIX),$(VIMP)): $(HOME)/%: %
 ############################################################
 GITLIST			= $(addprefix $(PREFIX),$(GIT))
 
-git: $(GITLIST)
+git: $(GITLIST) $(HOME)/.gitconfig
 
 $(GITLIST): $(PREFIX)%: %
 	$(file-attach)

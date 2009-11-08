@@ -11,8 +11,6 @@
 	diff = auto
 	interactive = auto
 	status = auto
-[core]
-    excludesfile = <%= ENV['HOME'] %>/.gitignore
 [merge]
 	keepBackup = false;
 	tool = p4merge
@@ -23,3 +21,4 @@
 	keepBackup = false
 [diff]
 	external = p4diff
+
