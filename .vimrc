@@ -88,6 +88,10 @@ set ambiwidth=double
 
 " File type
 syntax on " syntax coloring
+colorscheme desert
+" colorcheme pablo
+" colorcheme koehler
+
 
 " Hightlight Zenkaku space
 highlight ZenkakuSpace ctermbg=darkcyan ctermfg=darkcyan
@@ -439,4 +443,4 @@ let s:dirRepos = $HOME . "/.vim"
 let s:dirsRuntime = s:enumVimRuntimeDirs(s:dirRepos)
 call s:initRuntimePath(s:dirsRuntime)
 
-
+" vim:set foldmethod=marker:

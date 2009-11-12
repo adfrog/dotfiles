@@ -16,26 +16,27 @@ gui
 if has('gui_mac')
     set guifont=Osaka-Mono:h14
     " set guifont=mplus-1mn-regular:h14
-    " set runtimepath+=$HOME/.vim/gui
     set t_Co=256
     colorscheme xoria256 " colorscheme
 
-/    set transparency=240
-inoremap <ESC> <ESC>:set iminsert=0<CR>
-nnoremap / :set imsearch=0<CR>/
-nnoremap ? :set imsearch=0<CR>?
+    " set transparency=240
+    inoremap <ESC> <ESC>:set iminsert=0<CR>
+    nnoremap / :set imsearch=0<CR>/
+    nnoremap ? :set imsearch=0<CR>?
 endif
 
 " 実験版MacVim
 if has('gui_macvim')
-    " set guifont=Osaka-Mono:h14
+    set guifont=Osaka-Mono:h14
     " set guifont=mplus-1mn-regular:h14
-    " set runtimepath+=$HOME/.vim/gui
     set t_Co=256
     colorscheme xoria256 " colorscheme
     set transparency=5
     set showtabline=2
-"    set imdisable
+    "set imdisable
+    "inoremap <ESC> <ESC>:set iminsert=0<CR>
+    "nnoremap / :set imsearch=0<CR>/
+    "nnoremap ? :set imsearch=0<CR>?
     map <silent> gw :macaction selectNextWindow:<CR>
     map <silent> gW :macaction selectPreviousWindow:<CR>
 endif

@@ -6,7 +6,7 @@ liberator.globalVariables.plugin_loader_plugins = [
   'appendAnchor',				//リンク中の URL っぽいテキストにアンカーをつける
   'auto_detect_link',			//(次|前)っぽいページへのリンクを探してジャンプ
 //  'autopagerize_controll',
-//  'bitly',						//Bit.ly で短縮URLを得る
+  'bitly',						//Bit.ly で短縮URLを得る
   'commandBookmarklet',
   'char-hints-mod2',			
   'cookie',						//:pageinfo で cookie を表示する
