@@ -58,3 +58,8 @@ defbce "on"
 #GNU screen を起動したり、アタッチしたときに、ターミナルの横幅がリサイズされないように
 termcapinfo xterm* 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
 termcapinfo kterm-color* 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+
+#自動ログ保存
+logfile "~/log/tscreen-%Y%m%d-%n.log"
+log on
+deflog on
