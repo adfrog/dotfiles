@@ -90,6 +90,10 @@ alias scr="screen -xR"
 alias screen="screen -xRR"
 alias tscreen="tscreen -xRR"
 
+if [ $TERM = "screen" ]; then
+    alias exit="screen -D"
+fi
+
 
 # short name
 alias h='head'
