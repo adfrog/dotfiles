@@ -121,7 +121,8 @@ screen: $(SCREENLIST)
 
 $(SCREENLIST): .screenrc
 	$(file-attach)
-
+#	cat $< | sed -e 's:~:'${HOME}':g' > $@
+	@echo logfile "$(HOME)/log/screen-%Y%m%d-%n.log" >> $@
 
 ############################################################
 # Other
